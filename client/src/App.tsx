@@ -1,12 +1,15 @@
 import React from 'react';
+import Header from './components/Header';
+import JourneyList from './components/JourneyList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Bike app</h1>
-      </header>
-    </div>
+    <>
+    <Header/>
+
+    <JourneyList/>
+    
+    </>
   );
 }
 
