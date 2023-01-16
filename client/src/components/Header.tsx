@@ -8,9 +8,7 @@ const Header : React.FC = () : React.ReactElement => {
     <AppBar position='static'>
       <Container>
         <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>Helsinki bike journeys</Typography>
-          <IconButton color="inherit">
-          </IconButton>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 2 }}>Helsinki bike journeys</Typography>
         </Toolbar>
       </Container>
     </AppBar>
