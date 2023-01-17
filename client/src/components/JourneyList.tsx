@@ -64,7 +64,13 @@ const columns: GridColDef[] = [
     let hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${hours}:${minutes}:${remainingSeconds}`;
+    if (hours === 0){
+      return `${minutes} m ${remainingSeconds} s`;
+    }
+    if (hours === 0 && minutes === 0){
+      return `${remainingSeconds} m`;
+    }
+    return `${hours} h ${minutes} m ${remainingSeconds} s`;
   }
 
 const rows : GridRowsProp = data.map((journey : Journey, idx : number) => {
