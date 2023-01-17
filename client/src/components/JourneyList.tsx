@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button} from '@mui/material';
+import { Button, Container} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
 import { testdata } from "../data/testdata"
 
@@ -35,6 +35,12 @@ const columns: GridColDef[] = [
       width: 200,
     },
     {
+      field: 'Covered distance (m)',
+      headerName: 'Distance',
+      type: 'number',
+      width: 110,
+    },
+    {
       field: 'Departure',
       headerName: 'Departure time',
       type: 'string',
@@ -47,21 +53,30 @@ const columns: GridColDef[] = [
       width: 150,
     },
     {
-      field: 'Covered distance (m)',
-      headerName: 'Distance',
-      type: 'number',
-      width: 110,
+      field: 'Duration (sec.)',
+      headerName: 'Duration',
+      type: 'string',
+      width: 150,
     },
   ];
 
+  const secondsToHours = (seconds : number) => {
+    let hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours}:${minutes}:${remainingSeconds}`;
+  }
+
 const rows : GridRowsProp = data.map((journey : Journey, idx : number) => {
+    const duration = secondsToHours(journey['Duration (sec.)']);
     return  {
         id : idx,
         "Departure station name": journey["Departure station name"],
         "Return station name": journey["Return station name"],
+        "Covered distance (m)": journey["Covered distance (m)"],
         "Departure": journey.Departure.toLocaleString("fi-FI"),
         "Return": journey.Return.toLocaleString("fi-FI"),
-        "Covered distance (m)": journey["Covered distance (m)"],
+        "Duration (sec.)": duration,
         }
   })
 
@@ -69,18 +84,20 @@ const JourneyList : React.FC = () : React.ReactElement => {
 
     return (
         <>
-        <div style={{ height: 500, width: '100%' }}>
+        <Container>
+          <div style={{ width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
                 pageSize={10}
+                autoHeight={true}
+                disableSelectionOnClick={true}
             />
-        </div>
-        <Button onClick={() => console.log(data[1].Departure)}>LOG</Button>
+          </div>
+          <Button onClick={() => console.log(data[1].Departure)}>LOG</Button>
+        </Container>
         </>
     )
     }
 
 export default JourneyList;
-
-
