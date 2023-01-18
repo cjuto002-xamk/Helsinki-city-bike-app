@@ -1,23 +1,46 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./data.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
-model Journey {
-  id            Int    @id @default(autoincrement())
-  departure     Int
-  return        Int
-  dsid          Int
-  dsname        String
-  rsid          Int
-  rsname        String
-  distance      Int
-  duration      Int
+model july {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  /// Multiple data types found: String: 0.1%, Int: 99.9% out of 987 sampled entries
+  Covered_distance__m_   Json?   @map("Covered distance (m)")
+  Departure              String
+  Departure_station_id   Int?    @map("Departure station id")
+  Departure_station_name String? @map("Departure station name")
+  Duration__sec_         Int?    @map("Duration (sec)")
+  Return                 String?
+  Return_station_id      Int?    @map("Return station id")
+  Return_station_name    String? @map("Return station name")
+}
+
+model june {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  /// Multiple data types found: String: 0.2%, Int: 99.8% out of 985 sampled entries
+  Covered_distance__m_   Json?   @map("Covered distance (m)")
+  Departure              String
+  Departure_station_id   Int?    @map("Departure station id")
+  Departure_station_name String? @map("Departure station name")
+  Duration__sec_         Int?    @map("Duration (sec)")
+  Return                 String?
+  Return_station_id      Int?    @map("Return station id")
+  Return_station_name    String? @map("Return station name")
+}
+
+model may {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  Covered_distance__m_   Int?    @map("Covered distance (m)")
+  Departure              String
+  Departure_station_id   Int?    @map("Departure station id")
+  Departure_station_name String? @map("Departure station name")
+  Duration__sec_         Int?    @map("Duration (sec)")
+  Return                 String?
+  Return_station_id      Int?    @map("Return station id")
+  Return_station_name    String? @map("Return station name")
 }
