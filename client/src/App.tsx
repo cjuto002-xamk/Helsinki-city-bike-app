@@ -1,15 +1,18 @@
 import React from 'react';
 import Header from './components/Header';
 import JourneyList from './components/JourneyList';
+import { JourneyProvider } from './context/JourneysContext';
 
-function App() {
+const App : React.FC = () : React.ReactElement => {
   return (
-    <>
-    <Header/>
+    <JourneyProvider>
+      <>
+      <Header/>
 
-    <JourneyList/>
-    
-    </>
+      <JourneyList/>
+      
+      </>
+    </JourneyProvider>
   );
 }
 

@@ -1,25 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Container} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
-import { testdata } from "../data/testdata"
-
-interface Journey {
-    Departure : Date
-    Return : Date
-    ["Departure station id"] : number
-    ["Departure station name"] : string
-    ["Return station id"] : number
-    ["Return station name"] : string
-    ["Covered distance (m)"] : number
-    ["Duration (sec.)"] : number
-}
-
-const data : Journey[] = JSON.parse(JSON.stringify(testdata), (key, value) => {
-    if (key === 'Departure' || key === 'Return') {
-        return new Date(value);
-    }
-    return value;
-});
+import { JourneyContext } from '../context/JourneysContext';
+import { Journey } from "../context/JourneysContext"
 
 const columns: GridColDef[] = [
     {
@@ -73,20 +56,22 @@ const columns: GridColDef[] = [
     return `${hours} h ${minutes} m ${remainingSeconds} s`;
   }
 
-const rows : GridRowsProp = data.map((journey : Journey, idx : number) => {
-    const duration = secondsToHours(journey['Duration (sec.)']);
+const JourneyList : React.FC = () : React.ReactElement => {
+
+  const { apiData } = useContext(JourneyContext)
+
+  const rows : GridRowsProp = apiData.journeys.map((journey : Journey, idx : number) => {
+    const duration = secondsToHours(journey.Duration__sec_);
     return  {
         id : idx,
-        "Departure station name": journey["Departure station name"],
-        "Return station name": journey["Return station name"],
-        "Covered distance (m)": journey["Covered distance (m)"],
-        "Departure": journey.Departure.toLocaleString("fi-FI"),
-        "Return": journey.Return.toLocaleString("fi-FI"),
+        "Departure station name": journey.Departure_station_name,
+        "Return station name": journey.Return_station_name,
+        "Covered distance (m)": journey.Covered_distance__m_,
+        "Departure": new Date(journey.Departure).toLocaleString("fi-FI"),
+        "Return": new Date (journey.Return).toLocaleString("fi-FI"),
         "Duration (sec.)": duration,
         }
   })
-
-const JourneyList : React.FC = () : React.ReactElement => {
 
     return (
         <>
@@ -100,7 +85,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 disableSelectionOnClick={true}
             />
           </div>
-          <Button onClick={() => console.log(data[1].Departure)}>LOG</Button>
+          <Button onClick={() => console.log(typeof(apiData.journeys[0].Departure))}>LOG</Button>
         </Container>
         </>
     )
