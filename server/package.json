@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/node": "^17.0.17",
     "nodemon": "^2.0.15",
     "prisma": "^4.8.1",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@prisma/client": "^4.9.0",
     "@types/express": "^4.17.13",
+    "cors": "^2.8.5",
     "express": "^4.17.3"
   }
 }
