@@ -58,7 +58,7 @@ const columns: GridColDef[] = [
 
 const JourneyList : React.FC = () : React.ReactElement => {
 
-  const { apiData } = useContext(JourneyContext)
+  const { apiData, apiStationData } = useContext(JourneyContext)
 
 
   const rows : GridRowsProp = apiData.journeys.map((journey : Journey, idx : number) => {
@@ -86,7 +86,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 disableSelectionOnClick={true}
             />
           </div>
-          <Button onClick={() => console.log(typeof(apiData.journeys[0].Departure))}>LOG</Button>
+          <Button onClick={() => console.log(apiStationData)}>LOG</Button>
         </Container>
         </>
     )
