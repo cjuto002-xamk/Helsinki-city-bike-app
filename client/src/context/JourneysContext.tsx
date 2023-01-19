@@ -1,4 +1,5 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, {createContext} from 'react'
+import { useApitest } from '../hooks/useApitest';
 
 export const JourneyContext : React.Context<any> = createContext(undefined);
 
@@ -23,65 +24,10 @@ export interface Journey {
     Duration__sec_ : number
 }
 
-
 export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactElement => {
 
-    const [apiData, setApiData] = useState<ApiData>({
-        journeys : [],
-        error : "",
-        haettu : false
-      });
-
-    const apiCall = async () : Promise<void> => {
-
-        try {
-    
-          const connection = await fetch("http://localhost:3100/api/journeys");
-    
-          if(connection.status === 200){
-    
-            setApiData({
-              ...apiData,
-              journeys : await connection.json(),
-              haettu : true
-            });
-            
-          } else {
-    
-            let errortext : string = "";
-    
-            switch (connection.status) {
-    
-              case 404 : errortext = "Information not found"; break;
-              default : errortext = "Unexpected error on the server"; break;
-            }
-    
-            setApiData({
-              ...apiData,
-              error : errortext,
-              haettu : true
-            });
-          }
-    
-    
-        } catch (e : any) {
-    
-          setApiData({
-            ...apiData,
-            error : "Can not connect to server",
-            haettu : true
-          });
-          
-        }
+    const apiData = useApitest("http://localhost:3100/api/journeys");
       
-      }
-
-      useEffect(() => {
-
-        apiCall();
-      
-      },);
-    
     return (
         <JourneyContext.Provider value={{ apiData }}>
             {props.children}

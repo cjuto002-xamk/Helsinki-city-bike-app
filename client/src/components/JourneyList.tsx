@@ -60,6 +60,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
 
   const { apiData } = useContext(JourneyContext)
 
+
   const rows : GridRowsProp = apiData.journeys.map((journey : Journey, idx : number) => {
     const duration = secondsToHours(journey.Duration__sec_);
     return  {

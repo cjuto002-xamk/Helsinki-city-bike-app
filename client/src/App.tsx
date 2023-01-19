@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import JourneyList from './components/JourneyList';
+import FilterBar from './components/FilterBar';
 import { JourneyProvider } from './context/JourneysContext';
 
 const App : React.FC = () : React.ReactElement => {
@@ -8,6 +9,8 @@ const App : React.FC = () : React.ReactElement => {
     <JourneyProvider>
       <>
       <Header/>
+
+      <FilterBar/>
 
       <JourneyList/>
       

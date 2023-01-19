@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import apiJourneysRouter from './routes/apiJourneys'
+import apiStationsRouter from './routes/apiStations'
 import cors from 'cors'
 
 const app  : express.Application = express();
@@ -12,6 +13,8 @@ app.use(cors({origin : "http://localhost:3000"}));
 app.use(express.static(path.resolve(__dirname, "public")));
 
 app.use("/api/journeys", apiJourneysRouter);
+
+app.use("/api/stations", apiStationsRouter);
 
 app.use((req : express.Request, res : express.Response, next : express.NextFunction) => {
 
