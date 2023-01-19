@@ -1,21 +1,28 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Header from './components/Header';
 import JourneyList from './components/JourneyList';
-import FilterBar from './components/FilterBar';
 import { JourneyProvider } from './context/JourneysContext';
+import StationList from './components/StationList';
 
 const App : React.FC = () : React.ReactElement => {
   return (
-    <JourneyProvider>
-      <>
-      <Header/>
+    <Router>
+        <JourneyProvider>
+          <>
+          <Header/>
 
-      <FilterBar/>
+          <Routes>
 
-      <JourneyList/>
-      
-      </>
-    </JourneyProvider>
+            <Route path="/journeys" element={<JourneyList />} />
+
+            <Route path="/stations" element={<StationList/>}/>
+
+          </Routes>
+          
+          </>
+        </JourneyProvider>
+    </Router>
   );
 }
 
