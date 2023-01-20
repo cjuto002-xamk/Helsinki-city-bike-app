@@ -1,4 +1,4 @@
-import React, {createContext} from 'react'
+import React, {createContext, useState} from 'react'
 import { useApitest } from '../hooks/useApitest';
 import { useApiStations } from '../hooks/useApiStations';
 
@@ -50,12 +50,12 @@ export interface Station {
 
 export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactElement => {
 
-    const apiStationData = useApiStations("http://localhost:3100/api/stations");
+    const [apiStationData, setApiStationData] = useState<ApiStation[]>([])
 
-    const apiData = useApitest("http://localhost:3100/api/journeys");
+    const [apiData, setApiData] = useState<ApiData[]>([])
       
     return (
-        <JourneyContext.Provider value={{ apiData, apiStationData }}>
+        <JourneyContext.Provider value={{ apiStationData, setApiStationData, apiData, setApiData }}>
             {props.children}
         </JourneyContext.Provider>
     )

@@ -1,94 +1,78 @@
-import React from 'react'
-import { AppBar, Box,  FormControl, IconButton, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Theme, Toolbar, useTheme } from '@mui/material';
+import React, { useContext } from 'react'
+import { AppBar, Autocomplete, Box, Button, IconButton, TextField, Toolbar, Typography } from '@mui/material';
+import { ApiStation, JourneyContext, Station } from '../context/JourneysContext';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
+interface ApiStationData {
+  stations: Station[];
 }
+
 
 const FilterBar : React.FC = () : React.ReactElement => {
 
-    const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
+  const { apiStationData } : { apiStationData: ApiStationData } = useContext(JourneyContext)
+
+  const createUniqueList = (property: keyof Station) => {
+    const propertyList: {label: string | number}[] = apiStationData.stations.map((station : Station, idx : number) => {
+      return {
+        label : station[property]
+      }
+    });
   
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-      const {
-        target: { value },
-      } = event;
-      setPersonName(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-      );
-    };
+    return Array.from(new Set(propertyList.map(a => a.label))).map(label => {
+      return { label }
+    });
+  }
+  
+  const uniqueCity = createUniqueList("Kaupunki");
+  const uniqueName = createUniqueList("Nimi");
+  const uniqueAddress = createUniqueList("Nimi");
+  const uniqueOperator = createUniqueList("Nimi");
 
   return (
     <>
-    <Box sx={{ 
-        margin: "auto",
-        marginTop: "5px",
-        width:"100%",
-        flexGrow: 1 
-        }}>
-      <AppBar position="static" >
+      <Box sx={{ flexGrow: 1}}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, margin: "auto" }}
           >
+            <Autocomplete
+              disablePortal
+              id="City"
+              options={uniqueCity}
+              sx={{ width: 250 }}
+              renderInput={(params) => <TextField {...params} label="City" />}
+            />
+            <Autocomplete
+              disablePortal
+              id="Name"
+              options={uniqueName}
+              sx={{ width: 250 }}
+              renderInput={(params) => <TextField {...params} label="Name" />}
+            />
+            <Autocomplete
+              disablePortal
+              id="Address"
+              options={uniqueAddress}
+              sx={{ width: 250 }}
+              renderInput={(params) => <TextField {...params} label="Address" />}
+            />
+            <Autocomplete
+              disablePortal
+              id="Operator"
+              options={uniqueOperator}
+              sx={{ width: 250 }}
+              renderInput={(params) => <TextField {...params} label="Operator" />}
+            />
+{/*             <Button 
+            onClick={() => console.log(apiStationData.stations)}
+            color='secondary'
+            >Filter</Button> */}
           </IconButton>
-          <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
-          MenuProps={MenuProps}
-        >
-          {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
         </Toolbar>
       </AppBar>
     </Box>

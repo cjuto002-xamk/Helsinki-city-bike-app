@@ -1,6 +1,5 @@
 import React from 'react'
 import { AppBar, Button, ButtonGroup, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
-import Link from '@mui/material/Link';
 
 const Header : React.FC = () : React.ReactElement => {
 

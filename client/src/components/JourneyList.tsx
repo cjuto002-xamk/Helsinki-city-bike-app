@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
-import { Button, Container} from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react'
+import { Backdrop, Button, CircularProgress, Container, Typography} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
 import { JourneyContext } from '../context/JourneysContext';
 import { Journey } from "../context/JourneysContext"
+import { useApitest } from '../hooks/useApitest';
 
 const columns: GridColDef[] = [
     {
@@ -58,10 +59,15 @@ const columns: GridColDef[] = [
 
 const JourneyList : React.FC = () : React.ReactElement => {
 
-  const { apiData, apiStationData } = useContext(JourneyContext)
+  const { apiData, setApiData } = useContext(JourneyContext)
+  const [ apiEndpoint, setApiEndpoint ] = useState("http://localhost:3100/api/journeys");
+  const Data = useApitest(apiEndpoint);
 
+  useEffect(() => {
+    setApiData(Data)
+  },[Data]);
 
-  const rows : GridRowsProp = apiData.journeys.map((journey : Journey, idx : number) => {
+  const rows : GridRowsProp = Data.journeys.map((journey : Journey, idx : number) => {
     const duration = secondsToHours(journey.Duration__sec_);
     return  {
         id : idx,
@@ -77,7 +83,8 @@ const JourneyList : React.FC = () : React.ReactElement => {
     return (
         <>
         <Container>
-          <div style={{ width: '100%' }}>
+          {(Data.haettu)
+          ? <><div style={{ width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
@@ -86,7 +93,15 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 disableSelectionOnClick={true}
             />
           </div>
-          <Button onClick={() => console.log(apiStationData)}>LOG</Button>
+          <Button onClick={() => console.log(apiData)}>LOG</Button></>
+          :<Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={!Data.haettu}
+        >
+          <CircularProgress color="inherit" />
+          <Typography>Loading data</Typography>
+          </Backdrop>
+          }
         </Container>
         </>
     )
