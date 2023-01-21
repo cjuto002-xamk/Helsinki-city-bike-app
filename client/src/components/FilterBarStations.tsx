@@ -1,20 +1,19 @@
 import React, { useContext } from 'react'
-import { AppBar, Autocomplete, Box, Button, IconButton, TextField, Toolbar, Typography } from '@mui/material';
-import { ApiStation, JourneyContext, Station } from '../context/JourneysContext';
-
-interface ApiStationData {
-  stations: Station[];
-}
-
+import { AppBar, Autocomplete, Box, IconButton, TextField, Toolbar } from '@mui/material';
+import { JourneyContext, Station } from '../context/JourneysContext';
 
 const FilterBar : React.FC = () : React.ReactElement => {
 
-  const { apiStationData } : { apiStationData: ApiStationData } = useContext(JourneyContext)
+  const { apiStationData, 
+    selectedCity, setSelectedCity, 
+    selectedName, setSelectedName, 
+    selectedAddress, setSelectedAddress, 
+    selectedOperator, setSelectedOperator } = useContext(JourneyContext)
 
   const createUniqueList = (property: keyof Station) => {
     const propertyList: {label: string | number}[] = apiStationData.stations.map((station : Station, idx : number) => {
       return {
-        label : station[property]
+        label : (station[property] as string)
       }
     });
   
@@ -25,8 +24,8 @@ const FilterBar : React.FC = () : React.ReactElement => {
   
   const uniqueCity = createUniqueList("Kaupunki");
   const uniqueName = createUniqueList("Nimi");
-  const uniqueAddress = createUniqueList("Nimi");
-  const uniqueOperator = createUniqueList("Nimi");
+  const uniqueAddress = createUniqueList("Osoite");
+  const uniqueOperator = createUniqueList("Operaattor");
 
   return (
     <>
@@ -44,6 +43,10 @@ const FilterBar : React.FC = () : React.ReactElement => {
               disablePortal
               id="City"
               options={uniqueCity}
+              value={uniqueCity.find(city => city.label === selectedCity.label) || null}
+              onChange={(event, newValue) => {
+                setSelectedCity({label: newValue?.label || ""});
+              }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="City" />}
             />
@@ -51,6 +54,10 @@ const FilterBar : React.FC = () : React.ReactElement => {
               disablePortal
               id="Name"
               options={uniqueName}
+              value={uniqueName.find(name => name.label === selectedName.label) || null}
+              onChange={(event, newValue) => {
+                setSelectedName({label: newValue?.label || ""});
+              }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Name" />}
             />
@@ -58,6 +65,10 @@ const FilterBar : React.FC = () : React.ReactElement => {
               disablePortal
               id="Address"
               options={uniqueAddress}
+              value={uniqueAddress.find(address => address.label === selectedAddress.label) || null}
+              onChange={(event, newValue) => {
+                setSelectedAddress({label: newValue?.label || ""});
+              }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Address" />}
             />
@@ -65,13 +76,13 @@ const FilterBar : React.FC = () : React.ReactElement => {
               disablePortal
               id="Operator"
               options={uniqueOperator}
+              value={uniqueOperator.find(operator => operator.label === selectedOperator.label) || null}
+              onChange={(event, newValue) => {
+                setSelectedOperator({label: newValue?.label || ""});
+              }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Operator" />}
             />
-{/*             <Button 
-            onClick={() => console.log(apiStationData.stations)}
-            color='secondary'
-            >Filter</Button> */}
           </IconButton>
         </Toolbar>
       </AppBar>

@@ -1,6 +1,4 @@
 import React, {createContext, useState} from 'react'
-import { useApitest } from '../hooks/useApitest';
-import { useApiStations } from '../hooks/useApiStations';
 
 export const JourneyContext : React.Context<any> = createContext(undefined);
 
@@ -53,9 +51,20 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
     const [apiStationData, setApiStationData] = useState<ApiStation[]>([])
 
     const [apiData, setApiData] = useState<ApiData[]>([])
+
+    const [selectedCity, setSelectedCity] = React.useState("");
+    const [selectedName, setSelectedName] = React.useState("");
+    const [selectedAddress, setSelectedAddress] = React.useState("");
+    const [selectedOperator, setSelectedOperator] = React.useState("");
       
     return (
-        <JourneyContext.Provider value={{ apiStationData, setApiStationData, apiData, setApiData }}>
+        <JourneyContext.Provider value={{   apiStationData, setApiStationData, 
+                                            apiData, setApiData, 
+                                            selectedCity, setSelectedCity,
+                                            selectedName, setSelectedName,
+                                            selectedAddress, setSelectedAddress,
+                                            selectedOperator, setSelectedOperator
+                                             }}>
             {props.children}
         </JourneyContext.Provider>
     )

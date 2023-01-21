@@ -1,12 +1,13 @@
 import React from 'react'
-import { AppBar, Button, ButtonGroup, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { AppBar, ButtonGroup, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { Link } from "react-router-dom";
 
 const Header : React.FC = () : React.ReactElement => {
 
   const buttons = [
-    <Button key="home" href='/'>Home</Button>,
-    <Button key="journeys" href='/journeys'>Journeys</Button>,
-    <Button key="stations" href='/stations'>Stations</Button>,
+        <><Link to="/">Home</Link>
+        <Link to="/journeys">Journeys</Link>
+        <Link to="/stations">Stations</Link></>
   ];
 
   return (

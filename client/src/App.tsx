@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { JourneyProvider } from './context/JourneysContext';
 import Header from './components/Header';
 import JourneyList from './components/JourneyList';
-import { JourneyProvider } from './context/JourneysContext';
 import StationList from './components/StationList';
+import Home from './components/Home';
 
 const App : React.FC = () : React.ReactElement => {
   return (
@@ -13,6 +14,8 @@ const App : React.FC = () : React.ReactElement => {
           <Header/>
 
           <Routes>
+
+            <Route path="/" element={<Home />} />
 
             <Route path="/journeys" element={<JourneyList />} />
 
