@@ -3,7 +3,8 @@ import { Backdrop, Button, CircularProgress, Container, Typography} from '@mui/m
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
 import { JourneyContext } from '../context/JourneysContext';
 import { Journey } from "../context/JourneysContext"
-import { useApitest } from '../hooks/useApitest';
+import FilterBarJourneys from './FilterBarJourneys';
+import { testdata } from '../data/testdata';
 
 const columns: GridColDef[] = [
     {
@@ -48,7 +49,7 @@ const columns: GridColDef[] = [
     let hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    if (hours === 0){
+    if (hours === 0){ 
       return `${minutes} m ${remainingSeconds} s`;
     }
     if (hours === 0 && minutes === 0){
@@ -59,31 +60,35 @@ const columns: GridColDef[] = [
 
 const JourneyList : React.FC = () : React.ReactElement => {
 
-  const { apiData, setApiData } = useContext(JourneyContext)
-  const [ apiEndpoint, setApiEndpoint ] = useState("http://localhost:3100/api/journeys");
-  const Data = useApitest(apiEndpoint);
+  const { apiData } = useContext(JourneyContext)
+
+  let rows : GridRowsProp = [];
 
   useEffect(() => {
-    setApiData(Data)
-  },[Data]);
+    if(apiData.journeys){
+      rows = apiData.journeys.map((journey : Journey, idx : number) => {
+        const duration = secondsToHours(journey.Duration__sec_);
+        return  {
+            id : idx,
+            "Departure station name": journey.Departure_station_name,
+            "Return station name": journey.Return_station_name,
+            "Covered distance (m)": journey.Covered_distance__m_,
+            "Departure": new Date(journey.Departure).toLocaleString("fi-FI"),
+            "Return": new Date (journey.Return).toLocaleString("fi-FI"),
+            "Duration (sec.)": duration,
+          }
+      })
+    } else {
+      rows = [{id: 0, message: 'No data available'}]
+    }
 
-  const rows : GridRowsProp = Data.journeys.map((journey : Journey, idx : number) => {
-    const duration = secondsToHours(journey.Duration__sec_);
-    return  {
-        id : idx,
-        "Departure station name": journey.Departure_station_name,
-        "Return station name": journey.Return_station_name,
-        "Covered distance (m)": journey.Covered_distance__m_,
-        "Departure": new Date(journey.Departure).toLocaleString("fi-FI"),
-        "Return": new Date (journey.Return).toLocaleString("fi-FI"),
-        "Duration (sec.)": duration,
-        }
-  })
+  }, [apiData])
 
     return (
         <>
         <Container>
-          {(Data.haettu)
+          <FilterBarJourneys/>
+          {(!apiData.haettu)
           ? <><div style={{ width: '100%' }}>
             <DataGrid
                 rows={rows}
@@ -93,16 +98,17 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 disableSelectionOnClick={true}
             />
           </div>
-          <Button onClick={() => console.log(apiData)}>LOG</Button></>
+          </>
           :<Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={!Data.haettu}
+            open={!apiData.haettu}
         >
           <CircularProgress color="inherit" />
           <Typography>Loading data</Typography>
           </Backdrop>
           }
         </Container>
+        <Button onClick={() => console.log(apiData)}>LOG</Button>
         </>
     )
     }

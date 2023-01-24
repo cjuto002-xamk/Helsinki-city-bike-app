@@ -50,7 +50,11 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
 
     const [apiStationData, setApiStationData] = useState<ApiStation[]>([])
 
-    const [apiData, setApiData] = useState<ApiData[]>([])
+    const [apiData, setApiData] = useState<ApiData>({
+        journeys : [],
+        error : "",
+        haettu : false
+    });
 
     const [selectedCity, setSelectedCity] = React.useState("");
     const [selectedName, setSelectedName] = React.useState("");

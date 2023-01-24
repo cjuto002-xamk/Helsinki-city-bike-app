@@ -9,19 +9,27 @@ apiJourneysRouter.use(express.json());
 
 apiJourneysRouter.get("/", async (req : express.Request, res : express.Response, next : express.NextFunction) => {
 
+    const selectedMonth = Number(req.query.selectedMonth)
+    const selectedFromDay = Number(req.query.fromDay)
+    const selectedToDay = Number(req.query.toDay)
+
     try {
-        res.json(await prisma.july.findMany({
+        const journeys = await prisma.may.findMany({
             where: {
-              AND:   [{ Departure_station_name: { contains: 'Velodrominrinne' } }, 
-                    { Return_station_name: { contains: 'Venttiilikuja' } }],
+                Duration__sec_ : { gte: 10 },
+                Covered_distance__m_ : { gte: 10 },
+                Departure: { gte: `2021-0${selectedMonth}-${selectedFromDay}` },
+                Return: { lte:  `2021-0${selectedMonth}-${selectedToDay}` }
             },
-          }));
+            take: 100,
+        });
+        // Send the journeys as the response
+        res.json(journeys);
     } catch (e : any){
-        console.log(e)
+        console.log(e);
+        res.sendStatus(500);
     }
 
 });
-
-//await prisma.henkilo.findMany()
 
 export default apiJourneysRouter;
