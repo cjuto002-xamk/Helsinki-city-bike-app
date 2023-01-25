@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 const Header : React.FC = () : React.ReactElement => {
 
   const buttons = [
-        <><Link to="/">Home</Link>
-        <Link to="/journeys">Journeys</Link>
-        <Link to="/stations">Stations</Link></>
+        <>
+        <Link to="/" key={1}>Home</Link>
+        <Link to="/journeys" key={2}>Journeys</Link>
+        <Link to="/stations" key={3}>Stations</Link>
+        </>
   ];
 
   return (

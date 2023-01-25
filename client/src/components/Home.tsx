@@ -1,15 +1,16 @@
-import React from 'react'
-import { Typography } from '@mui/material';
+import React, { useContext } from 'react'
+import { Button, Typography } from '@mui/material';
+import { JourneyContext } from '../context/JourneysContext';
 
 
 const Home : React.FC = () : React.ReactElement => {
 
-   /*  const { apiStationData, setApiStationData, selectedCity, setSelectedCity } = useContext(JourneyContext) */
+    const { apiData } = useContext(JourneyContext)
 
     return (
         <>
         <Typography>HOME</Typography>
-        {/* <Button onClick={() => console.log(selectedCity)}>LOG</Button> */}
+        <Button onClick={() => console.log(apiData)}>LOG</Button>
         </>
     )
 }
