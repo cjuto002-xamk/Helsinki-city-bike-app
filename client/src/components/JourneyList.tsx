@@ -21,9 +21,9 @@ const columns: GridColDef[] = [
     },
     {
       field: 'Covered distance (m)',
-      headerName: 'Distance',
+      headerName: 'Distance meters',
       type: 'number',
-      width: 110,
+      width: 120,
     },
     {
       field: 'Departure',
@@ -70,6 +70,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
             "Duration (sec.)": duration,
           }
       }))
+      console.log(apiData.journeys)
     } 
   }, [apiData])
 
