@@ -53,7 +53,7 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
     const [apiData, setApiData] = useState<ApiData>({
         journeys : [],
         error : "",
-        haettu : false
+        haettu : true
     });
 
     const [selectedCity, setSelectedCity] = React.useState("");

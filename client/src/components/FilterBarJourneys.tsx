@@ -22,6 +22,11 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
     const [days, setDays] = useState<React.ReactElement[]>([]);
 
     const handleClick = () => {
+        setApiData({
+            ...apiData,
+            error: "",
+            haettu: false
+        });
         const url : string = "http://localhost:3100/api/journeys"
         axios.get(url, { params: query})
         .then((response) => {

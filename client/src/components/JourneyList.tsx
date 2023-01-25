@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Backdrop, Button, CircularProgress, Container, Typography} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
-import { JourneyContext } from '../context/JourneysContext';
+import { ApiData, JourneyContext } from '../context/JourneysContext';
 import { Journey } from "../context/JourneysContext"
 import FilterBarJourneys from './FilterBarJourneys';
 import { testdata } from '../data/testdata';
@@ -39,35 +39,27 @@ const columns: GridColDef[] = [
     },
     {
       field: 'Duration (sec.)',
-      headerName: 'Duration',
+      headerName: 'Duration minutes',
       type: 'string',
       width: 150,
     },
   ];
 
-  const secondsToHours = (seconds : number) => {
-    let hours = Math.floor(seconds / 3600);
+  const secondsToMinutes = (seconds : number) => {
     const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    if (hours === 0){ 
-      return `${minutes} m ${remainingSeconds} s`;
-    }
-    if (hours === 0 && minutes === 0){
-      return `${remainingSeconds} m`;
-    }
-    return `${hours} h ${minutes} m ${remainingSeconds} s`;
+    return minutes;
   }
 
 const JourneyList : React.FC = () : React.ReactElement => {
 
   const { apiData } = useContext(JourneyContext)
 
-  let rows : GridRowsProp = [];
+  const [rows, setRows] = useState<GridRowsProp>([]);
 
   useEffect(() => {
     if(apiData.journeys){
-      rows = apiData.journeys.map((journey : Journey, idx : number) => {
-        const duration = secondsToHours(journey.Duration__sec_);
+      setRows(apiData.journeys.map((journey : Journey, idx : number) => {
+        const duration = secondsToMinutes(journey.Duration__sec_);
         return  {
             id : idx,
             "Departure station name": journey.Departure_station_name,
@@ -77,18 +69,15 @@ const JourneyList : React.FC = () : React.ReactElement => {
             "Return": new Date (journey.Return).toLocaleString("fi-FI"),
             "Duration (sec.)": duration,
           }
-      })
-    } else {
-      rows = [{id: 0, message: 'No data available'}]
-    }
-
+      }))
+    } 
   }, [apiData])
 
     return (
         <>
         <Container>
           <FilterBarJourneys/>
-          {(!apiData.haettu)
+          {(apiData.haettu)
           ? <><div style={{ width: '100%' }}>
             <DataGrid
                 rows={rows}
@@ -108,7 +97,6 @@ const JourneyList : React.FC = () : React.ReactElement => {
           </Backdrop>
           }
         </Container>
-        <Button onClick={() => console.log(apiData)}>LOG</Button>
         </>
     )
     }

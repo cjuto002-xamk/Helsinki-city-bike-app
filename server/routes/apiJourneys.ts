@@ -14,13 +14,13 @@ apiJourneysRouter.get("/", async (req : express.Request, res : express.Response,
     let selectedToDay = req.query.toDay
     
     try {
-        if (Number(selectedFromDay) > 1 || Number(selectedFromDay) < 10) {
+        if (Number(selectedFromDay) >= 1 && Number(selectedFromDay) < 10) {
             selectedFromDay = `0${selectedFromDay}`
         }
-        if(Number(selectedToDay) > 1 || Number(selectedToDay) < 10) {
+        if(Number(selectedToDay) >= 1 && Number(selectedToDay) < 10) {
             selectedToDay = `0${selectedToDay}`
         }
-        const journeys = await prisma.journey.findMany({
+        const journeys = await prisma.may.findMany({
             where: {
                 Duration__sec_ : { gte: 10 },
                 Covered_distance__m_ : { gte: 10 },
