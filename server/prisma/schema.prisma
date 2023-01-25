@@ -8,7 +8,7 @@ datasource db {
 }
 model journey {
   id                     String  @id @default(auto()) @map("_id") @db.ObjectId
-  Covered_distance__m_   Json?   @map("Covered distance (m)")
+  Covered_distance__m_   Int   @map("Covered distance (m)")
   Departure              String
   Departure_station_id   Int?    @map("Departure station id")
   Departure_station_name String? @map("Departure station name")
@@ -17,44 +17,6 @@ model journey {
   Return_station_id      Int?    @map("Return station id")
   Return_station_name    String? @map("Return station name")
 }
-model july {
-  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: String: 0.1%, Int: 99.9% out of 979 sampled entries
-  Covered_distance__m_   Json?   @map("Covered distance (m)")
-  Departure              String
-  Departure_station_id   Int?    @map("Departure station id")
-  Departure_station_name String? @map("Departure station name")
-  Duration__sec_         Int?    @map("Duration (sec)")
-  Return                 String?
-  Return_station_id      Int?    @map("Return station id")
-  Return_station_name    String? @map("Return station name")
-}
-
-model june {
-  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: String: 0.2%, Int: 99.8% out of 991 sampled entries
-  Covered_distance__m_   Json?   @map("Covered distance (m)")
-  Departure              String
-  Departure_station_id   Int?    @map("Departure station id")
-  Departure_station_name String? @map("Departure station name")
-  Duration__sec_         Int?    @map("Duration (sec)")
-  Return                 String?
-  Return_station_id      Int?    @map("Return station id")
-  Return_station_name    String? @map("Return station name")
-}
-
-model may {
-  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
-  Covered_distance__m_   Int?    @map("Covered distance (m)")
-  Departure              String
-  Departure_station_id   Int?    @map("Departure station id")
-  Departure_station_name String? @map("Departure station name")
-  Duration__sec_         Int?    @map("Duration (sec)")
-  Return                 String?
-  Return_station_id      Int?    @map("Return station id")
-  Return_station_name    String? @map("Return station name")
-}
-
 model stations {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
   Adress     String

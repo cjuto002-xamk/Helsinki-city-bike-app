@@ -13,8 +13,6 @@ apiJourneysRouter.get("/", async (req : express.Request, res : express.Response,
     let selectedFromDay = req.query.fromDay
     let selectedToDay = req.query.toDay
     
-
-
     try {
         if (Number(selectedFromDay) > 1 || Number(selectedFromDay) < 10) {
             selectedFromDay = `0${selectedFromDay}`
