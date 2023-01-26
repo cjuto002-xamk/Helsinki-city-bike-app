@@ -3,7 +3,6 @@ import { Backdrop, CircularProgress, Container, Typography} from '@mui/material'
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
 import { JourneyContext } from '../context/JourneysContext';
 import FilterBar from './FilterBarStations';
-import { useApiStations } from '../hooks/useApiStations';
 
 const columns: GridColDef[] = [
     {
@@ -41,43 +40,54 @@ const columns: GridColDef[] = [
 
 const StationList : React.FC = () : React.ReactElement => {
 
-  const { setApiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext)
+  const { apiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext)
 
-  const [ apiEndpoint, setApiEndpoint ] = useState("http://localhost:3100/api/stations");
-  const Data = useApiStations(apiEndpoint);
+  const [ rows, setRows ] = useState<GridRowsProp>([]);
+
   const [ filteredData, setFilteredData ] = useState<Station[]>([]);
 
-  const filterData = (data: Station[], city:string, name:string, address:string, operator:string) => {
-    return data.filter((station : Station) => {
-        if(city !== "" && station.Kaupunki !== city) return false;
-        if(name !== "" && station.Name !== name) return false;
-        if(address !== "" && station.Osoite !== address) return false;
-        if(operator !== "" && station.Operaattor !== operator) return false;
-        return true;
-    });
-  }
+  useEffect(() => {
+    if (selectedCity.label|| selectedName.label || selectedAddress.label || selectedOperator.label) {
+      setFilteredData(apiStationData.stations.filter((station : Station) => {
+        return station.Kaupunki.includes(selectedCity.label) &&
+        station.Name.includes(selectedName.label) &&
+        station.Osoite.includes(selectedAddress.label) &&
+        station.Operaattor.includes(selectedOperator.label)
+      }))
+    }else {
+      setFilteredData(apiStationData.stations)
+    } 
+  },[selectedCity, selectedName, selectedAddress, selectedOperator]);
 
   useEffect(() => {
-    const filteredData = filterData(Data.stations, selectedCity, selectedName, selectedAddress, selectedOperator);
-    setFilteredData(filteredData);
-    setApiStationData(Data)
-  },[Data, selectedCity, selectedName, selectedAddress, selectedOperator]);
-
-  const rows : GridRowsProp = filteredData.map((station : Station, idx : number) => {
-    return  {
-        id : idx,
-        "City": station.Kaupunki,
-        "Name": station.Name,
-        "Address": station.Osoite,
-        "Operator": station.Operaattor,
-        }
-  })
-
+    if (filteredData.length === 0) {
+      setRows(apiStationData.stations.map((station : Station, idx : number) => {
+        return  {
+            id : idx,
+            "City": station.Kaupunki,
+            "Name": station.Name,
+            "Address": station.Osoite,
+            "Operator": station.Operaattor,
+            }
+      }))
+    }else {
+      setRows(filteredData.map((station : Station, idx : number) => {
+        return  {
+            id : idx,
+            "City": station.Kaupunki,
+            "Name": station.Name,
+            "Address": station.Osoite,
+            "Operator": station.Operaattor,
+            }
+      }))
+    }
+  },[apiStationData.haettu, filteredData])
 
   return (
       <>
-      {(Data.haettu)
-      ?<><FilterBar/>
+      <FilterBar/>
+      {(apiStationData.haettu)
+      ?<>
       <Container>
         <div style={{ width: '100%' }}>
           <DataGrid
@@ -91,10 +101,10 @@ const StationList : React.FC = () : React.ReactElement => {
       </Container></>
       :<Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={!Data.haettu}
+        open={!apiStationData.haettu}
         >
       <CircularProgress color="inherit" />
-      <Typography>Loading data</Typography>
+      <Typography>Loading station data</Typography>
       </Backdrop>
       }
       </>
