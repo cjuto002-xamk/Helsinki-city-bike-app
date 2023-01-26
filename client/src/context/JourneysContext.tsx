@@ -48,7 +48,11 @@ export interface Station {
 
 export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactElement => {
 
-    const [apiStationData, setApiStationData] = useState<ApiStation[]>([])
+    const [apiStationData, setApiStationData] = useState<ApiStation>({
+        stations : [],
+        error : "",
+        haettu : false
+    })
 
     const [apiData, setApiData] = useState<ApiData>({
         journeys : [],

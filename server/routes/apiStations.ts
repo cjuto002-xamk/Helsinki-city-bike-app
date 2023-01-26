@@ -10,6 +10,7 @@ apiStationsRouter.use(express.json());
 apiStationsRouter.get("/", async (req : express.Request, res : express.Response, next : express.NextFunction) => {
 
     try {
+        console.log("Station API")
         res.json(await prisma.stations.findMany({
           }));
     } catch (e : any){

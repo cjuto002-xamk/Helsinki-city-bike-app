@@ -1,14 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AppBar, Autocomplete, Box, IconButton, TextField, Toolbar } from '@mui/material';
 import { JourneyContext, Station } from '../context/JourneysContext';
+import axios from 'axios';
 
 const FilterBar : React.FC = () : React.ReactElement => {
 
-  const { apiStationData, 
-    selectedCity, setSelectedCity, 
-    selectedName, setSelectedName, 
-    selectedAddress, setSelectedAddress, 
-    selectedOperator, setSelectedOperator } = useContext(JourneyContext)
+  const { apiStationData, setApiStationData,
+          selectedCity, setSelectedCity, 
+          selectedName, setSelectedName, 
+          selectedAddress, setSelectedAddress, 
+          selectedOperator, setSelectedOperator } = useContext(JourneyContext)
+
+  const url = "http://localhost:3100/api/stations";
+
+  useEffect(() => {
+    axios.get(url)
+        .then((response) => {
+            setApiStationData({
+                ...apiStationData,
+                stations: response.data,
+                haettu: true
+            });
+        })
+        .catch((error) => {
+            setApiStationData({
+                ...apiStationData,
+                error: error.message,
+                haettu: true
+            });
+        });
+  }, []);
 
   const createUniqueList = (property: keyof Station) => {
     const propertyList: {label: string | number}[] = apiStationData.stations.map((station : Station, idx : number) => {
