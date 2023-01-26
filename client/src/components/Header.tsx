@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 const Header : React.FC = () : React.ReactElement => {
 
   const buttons = [
-        <>
+      <div>
         <Link to="/" key={1}>Home</Link>
         <Link to="/journeys" key={2}>Journeys</Link>
         <Link to="/stations" key={3}>Stations</Link>
-        </>
+      </div>
   ];
 
   return (

@@ -60,10 +60,10 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
         haettu : true
     });
 
-    const [selectedCity, setSelectedCity] = React.useState("");
-    const [selectedName, setSelectedName] = React.useState("");
-    const [selectedAddress, setSelectedAddress] = React.useState("");
-    const [selectedOperator, setSelectedOperator] = React.useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [selectedName, setSelectedName] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
+    const [selectedOperator, setSelectedOperator] = useState("");
       
     return (
         <JourneyContext.Provider value={{   apiStationData, setApiStationData, 

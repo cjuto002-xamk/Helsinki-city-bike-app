@@ -40,39 +40,48 @@ const columns: GridColDef[] = [
 
 const StationList : React.FC = () : React.ReactElement => {
 
-  const { apiStationData ,setApiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext)
+  const { apiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext)
 
   const [ rows, setRows ] = useState<GridRowsProp>([]);
 
-  //const [ filteredData, setFilteredData ] = useState<Station[]>([]);
-
-/*   const filterData = (data: Station[], city:string, name:string, address:string, operator:string) => {
-    return data.filter((station : Station) => {
-        if(city !== "" && station.Kaupunki !== city) return false;
-        if(name !== "" && station.Name !== name) return false;
-        if(address !== "" && station.Osoite !== address) return false;
-        if(operator !== "" && station.Operaattor !== operator) return false;
-        return true;
-    });
-  }
+  const [ filteredData, setFilteredData ] = useState<Station[]>([]);
 
   useEffect(() => {
-    const filteredData = filterData(Data.stations, selectedCity, selectedName, selectedAddress, selectedOperator);
-    setFilteredData(filteredData);
-    setApiStationData(Data)
-  },[Data, selectedCity, selectedName, selectedAddress, selectedOperator]); */
+    if (selectedCity.label|| selectedName.label || selectedAddress.label || selectedOperator.label) {
+      setFilteredData(apiStationData.stations.filter((station : Station) => {
+        return station.Kaupunki.includes(selectedCity.label) &&
+        station.Name.includes(selectedName.label) &&
+        station.Osoite.includes(selectedAddress.label) &&
+        station.Operaattor.includes(selectedOperator.label)
+      }))
+    }else {
+      setFilteredData(apiStationData.stations)
+    } 
+  },[selectedCity, selectedName, selectedAddress, selectedOperator]);
 
   useEffect(() => {
-    setRows(apiStationData.stations.map((station : Station, idx : number) => {
-      return  {
-          id : idx,
-          "City": station.Kaupunki,
-          "Name": station.Name,
-          "Address": station.Osoite,
-          "Operator": station.Operaattor,
-          }
-    }))
-  },[apiStationData.haettu])
+    if (filteredData.length === 0) {
+      setRows(apiStationData.stations.map((station : Station, idx : number) => {
+        return  {
+            id : idx,
+            "City": station.Kaupunki,
+            "Name": station.Name,
+            "Address": station.Osoite,
+            "Operator": station.Operaattor,
+            }
+      }))
+    }else {
+      setRows(filteredData.map((station : Station, idx : number) => {
+        return  {
+            id : idx,
+            "City": station.Kaupunki,
+            "Name": station.Name,
+            "Address": station.Osoite,
+            "Operator": station.Operaattor,
+            }
+      }))
+    }
+  },[apiStationData.haettu, filteredData])
 
   return (
       <>

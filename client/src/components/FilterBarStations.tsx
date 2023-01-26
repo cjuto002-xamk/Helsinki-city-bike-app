@@ -53,13 +53,6 @@ const FilterBar : React.FC = () : React.ReactElement => {
       <Box sx={{ flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, margin: "auto" }}
-          >
             <Autocomplete
               disablePortal
               id="City"
@@ -104,7 +97,6 @@ const FilterBar : React.FC = () : React.ReactElement => {
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Operator" />}
             />
-          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
