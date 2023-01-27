@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Paper, Typography } from '@mui/material';
-import "../styles/styles.css"
 
 
 const Home : React.FC = () : React.ReactElement => {
@@ -13,6 +12,7 @@ const Home : React.FC = () : React.ReactElement => {
                 <Typography variant="body1" component="p" gutterBottom className='text'>
                     An app that queries bike rental data from a mongodb database and displays it in a user-friendly way.
                     Journey page shows journeys made by lessees, and the stations page shows all stations in the database.
+                    To start click on either Journeys or Stations from the top right navigation
                 </Typography>
             </Paper>
         </Box>

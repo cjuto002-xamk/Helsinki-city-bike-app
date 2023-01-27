@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { AppBar, Autocomplete, Box, IconButton, TextField, Toolbar } from '@mui/material';
+import { AppBar, Autocomplete, Box, TextField, Toolbar } from '@mui/material';
 import { JourneyContext, Station } from '../context/JourneysContext';
 import axios from 'axios';
 
@@ -29,7 +29,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
                 haettu: true
             });
         });
-  }, []);
+  },);
 
   const createUniqueList = (property: keyof Station) => {
     const propertyList: {label: string | number}[] = apiStationData.stations.map((station : Station, idx : number) => {
@@ -50,9 +50,9 @@ const FilterBar : React.FC = () : React.ReactElement => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1}}>
-      <AppBar position="static">
-        <Toolbar>
+      <Box>
+      <AppBar position="static" className="stationBar">
+        <Toolbar className="stationToolBar">
             <Autocomplete
               disablePortal
               id="City"
@@ -63,6 +63,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="City" />}
+              className='journeySelect'
             />
             <Autocomplete
               disablePortal
@@ -74,6 +75,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Name" />}
+              className='journeySelect'
             />
             <Autocomplete
               disablePortal
@@ -85,6 +87,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Address" />}
+              className='journeySelect'
             />
             <Autocomplete
               disablePortal
@@ -96,6 +99,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Operator" />}
+              className='journeySelect'
             />
         </Toolbar>
       </AppBar>

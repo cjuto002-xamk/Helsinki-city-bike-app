@@ -85,10 +85,10 @@ const StationList : React.FC = () : React.ReactElement => {
 
   return (
       <>
+      <Container>
       <FilterBar/>
       {(apiStationData.haettu)
       ?<>
-      <Container>
         <div style={{ width: '100%' }}>
           <DataGrid
               rows={rows}
@@ -96,9 +96,10 @@ const StationList : React.FC = () : React.ReactElement => {
               pageSize={10}
               autoHeight={true}
               disableSelectionOnClick={true}
+              className="journeyGrid"
           />
         </div>
-      </Container></>
+      </>
       :<Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={!apiStationData.haettu}
@@ -107,6 +108,7 @@ const StationList : React.FC = () : React.ReactElement => {
       <Typography>Loading station data</Typography>
       </Backdrop>
       }
+      </Container>
       </>
   )
   }

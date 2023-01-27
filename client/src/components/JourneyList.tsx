@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Backdrop, Button, CircularProgress, Container, Typography} from '@mui/material';
+import { Backdrop, CircularProgress, Container, Typography} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
-import { ApiData, JourneyContext } from '../context/JourneysContext';
+import { JourneyContext } from '../context/JourneysContext';
 import { Journey } from "../context/JourneysContext"
 import FilterBarJourneys from './FilterBarJourneys';
-import { testdata } from '../data/testdata';
 
 const columns: GridColDef[] = [
     {
@@ -86,6 +85,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 pageSize={10}
                 autoHeight={true}
                 disableSelectionOnClick={true}
+                className="journeyGrid"
             />
           </div>
           </>

@@ -80,63 +80,58 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
     }, [selectedMonth, selectedFromDay, selectedToDay]);
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ mt: 2, }}>
-        <Toolbar>
-            <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, }}
-            >
-            </IconButton>
-                <FormControl sx={{ m: 1, mr: 5, minWidth: 80, width: 150 }}>
-                    <InputLabel id="month">Month</InputLabel>
-                        <Select
-                            labelId="month"
-                            id="month"
-                            value={month}
-                            onChange={handleChange}
-                            autoWidth
-                            label="month"
-                            name='month'
-                            >
-                            <MenuItem value={"may"}>May</MenuItem>
-                            <MenuItem value={"june"}>June</MenuItem>
-                            <MenuItem value={"july"}>July</MenuItem>
-                        </Select>
-                </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 80 }}>
-                    <InputLabel id="Fday">From</InputLabel>
-                        <Select
-                            labelId="Fday"
-                            id="Fday"
-                            value={selectedFromDay.toString()}
-                            onChange={handleChange}
-                            autoWidth
-                            label="Fday"
-                            name='Fday'
-                            >  
-                            {days}
-                        </Select>
-                </FormControl>
-                <Typography>-</Typography>
-                <FormControl sx={{ m: 1, minWidth: 80 }}>
-                    <InputLabel id="Tday">To</InputLabel>
-                        <Select
-                            labelId="Tday"
-                            id="Tday"
-                            value={selectedToDay.toString()}
-                            onChange={handleChange}
-                            autoWidth
-                            label="Tday"
-                            name='Tday'
-                            >
-                            {days}
-                        </Select>
-                </FormControl>
-            <Button color="inherit" onClick={handleClick}>Get data</Button>
+        <Box>
+        <AppBar position="static" className="journeyBar">
+        <Toolbar className="journeyToolBar">
+            <FormControl sx={{ mr: 5, minWidth: 80, width: 200 }}>
+                <InputLabel id="month">Month</InputLabel>
+                    <Select
+                        labelId="month"
+                        id="month"
+                        value={month}
+                        onChange={handleChange}
+                        autoWidth
+                        label="month"
+                        name='month'
+                        className='journeySelect'
+                        >
+                        <MenuItem value={"may"}>May</MenuItem>
+                        <MenuItem value={"june"}>June</MenuItem>
+                        <MenuItem value={"july"}>July</MenuItem>
+                    </Select>
+            </FormControl>
+            <FormControl sx={{ minWidth: 100 }}>
+                <InputLabel id="Fday">From</InputLabel>
+                    <Select
+                        labelId="Fday"
+                        id="Fday"
+                        value={selectedFromDay.toString()}
+                        onChange={handleChange}
+                        autoWidth
+                        label="Fday"
+                        name='Fday'
+                        className='journeySelect'
+                        >  
+                        {days}
+                    </Select>
+            </FormControl>
+            <Typography>-</Typography>
+            <FormControl sx={{ minWidth: 100 }}>
+                <InputLabel id="Tday">To</InputLabel>
+                    <Select
+                        labelId="Tday"
+                        id="Tday"
+                        value={selectedToDay.toString()}
+                        onChange={handleChange}
+                        autoWidth
+                        label="Tday"
+                        name='Tday'
+                        className='journeySelect'
+                        >
+                        {days}
+                    </Select>
+            </FormControl>
+            <Button onClick={handleClick} variant="contained" className='journeyButton'>Get data</Button>
         </Toolbar>
         </AppBar>
     </Box>
