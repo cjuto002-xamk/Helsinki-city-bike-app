@@ -1,27 +1,32 @@
 import React from 'react'
-import { AppBar, ButtonGroup, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, ButtonGroup, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
+import "../styles/styles.css"
 
 const Header : React.FC = () : React.ReactElement => {
-
-  const buttons = [
-      <div>
-        <Link to="/" key={1}>Home</Link>
-        <Link to="/journeys" key={2}>Journeys</Link>
-        <Link to="/stations" key={3}>Stations</Link>
-      </div>
-  ];
 
   return (
     <>
     <CssBaseline />
-    <AppBar position='static'>
+    <AppBar position='static' className='appBar'>
       <Container>
         <Toolbar>
-          <Typography variant="h4" component="div" sx={{ flexGrow: 2 }}>HELSINKI BIKE JOURNEYS</Typography>
+          <Typography className='header'>Helsinki bike journeys app</Typography>
 
-          <ButtonGroup size="large" aria-label="large button group" color='secondary'>
-            {buttons}
+          <ButtonGroup variant="contained" aria-label="outlined primary button group" color='inherit' className='nav'>
+
+            <Button>
+              <Link to="/">Home</Link>
+            </Button>
+
+            <Button>
+              <Link to="/journeys">Journeys</Link>
+            </Button>
+
+            <Button>
+            <Link to="/stations">Stations</Link>
+            </Button>
+
           </ButtonGroup>
 
         </Toolbar>
