@@ -5,6 +5,7 @@ import Header from './components/Header';
 import JourneyList from './components/JourneyList';
 import StationList from './components/StationList';
 import Home from './components/Home';
+import "@fontsource/roboto";
 
 const App : React.FC = () : React.ReactElement => {
   return (
