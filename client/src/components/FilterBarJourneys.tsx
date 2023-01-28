@@ -83,7 +83,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
         <Box>
         <AppBar position="static" className="journeyBar">
         <Toolbar className="journeyToolBar">
-            <FormControl sx={{ mr: 5, minWidth: 80, width: 200 }}>
+            <FormControl variant='filled' sx={{ mr: 5, minWidth: 80, width: 200 }}>
                 <InputLabel id="month">Month</InputLabel>
                     <Select
                         labelId="month"
@@ -100,7 +100,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
                         <MenuItem value={"july"}>July</MenuItem>
                     </Select>
             </FormControl>
-            <FormControl sx={{ minWidth: 100 }}>
+            <FormControl variant='filled' sx={{ minWidth: 100 }}>
                 <InputLabel id="Fday">From</InputLabel>
                     <Select
                         labelId="Fday"
@@ -116,7 +116,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
                     </Select>
             </FormControl>
             <Typography>-</Typography>
-            <FormControl sx={{ minWidth: 100 }}>
+            <FormControl variant='filled' sx={{ minWidth: 100 }}>
                 <InputLabel id="Tday">To</InputLabel>
                     <Select
                         labelId="Tday"

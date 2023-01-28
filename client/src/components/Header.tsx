@@ -14,15 +14,15 @@ const Header : React.FC = () : React.ReactElement => {
 
           <ButtonGroup variant="contained" aria-label="outlined primary button group" color='inherit' className='nav'>
 
-            <Button>
+            <Button className='navButton'>
               <Link to="/">Home</Link>
             </Button>
 
-            <Button>
+            <Button className='navButton'>
               <Link to="/journeys">Journeys</Link>
             </Button>
 
-            <Button>
+            <Button className='navButton'>
             <Link to="/stations">Stations</Link>
             </Button>
 
