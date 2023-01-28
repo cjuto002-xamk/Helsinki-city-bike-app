@@ -5,15 +5,16 @@ import axios from 'axios';
 
 const FilterBar : React.FC = () : React.ReactElement => {
 
+  // all needed setters from context
   const { apiStationData, setApiStationData,
           selectedCity, setSelectedCity, 
           selectedName, setSelectedName, 
           selectedAddress, setSelectedAddress, 
           selectedOperator, setSelectedOperator } = useContext(JourneyContext)
 
-  const url = "http://localhost:3100/api/stations";
+  const url = "http://localhost:3100/api/stations"; // url for api
 
-  useEffect(() => {
+  useEffect(() => { // fetches data from api and sets it to context
     axios.get(url)
         .then((response) => {
             setApiStationData({
@@ -31,7 +32,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
         });
   },);
 
-  const createUniqueList = (property: keyof Station) => {
+  const createUniqueList = (property: keyof Station) => { // creates unique list of values for filtering
     const propertyList: {label: string | number}[] = apiStationData.stations.map((station : Station, idx : number) => {
       return {
         label : (station[property] as string)
@@ -43,6 +44,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
     });
   }
   
+  // unique lists for filtering
   const uniqueCity = createUniqueList("Kaupunki");
   const uniqueName = createUniqueList("Nimi");
   const uniqueAddress = createUniqueList("Osoite");
@@ -58,7 +60,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               id="City"
               options={uniqueCity}
               value={uniqueCity.find(city => city.label === selectedCity.label) || null}
-              onChange={(event, newValue) => {
+              onChange={(event, newValue) => { // sets city value to context
                 setSelectedCity({label: newValue?.label || ""});
               }}
               sx={{ width: 250 }}
@@ -70,7 +72,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               id="Name"
               options={uniqueName}
               value={uniqueName.find(name => name.label === selectedName.label) || null}
-              onChange={(event, newValue) => {
+              onChange={(event, newValue) => { // sets name value to context
                 setSelectedName({label: newValue?.label || ""});
               }}
               sx={{ width: 250 }}
@@ -82,7 +84,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               id="Address"
               options={uniqueAddress}
               value={uniqueAddress.find(address => address.label === selectedAddress.label) || null}
-              onChange={(event, newValue) => {
+              onChange={(event, newValue) => { // sets address value to context
                 setSelectedAddress({label: newValue?.label || ""});
               }}
               sx={{ width: 250 }}
@@ -94,7 +96,7 @@ const FilterBar : React.FC = () : React.ReactElement => {
               id="Operator"
               options={uniqueOperator}
               value={uniqueOperator.find(operator => operator.label === selectedOperator.label) || null}
-              onChange={(event, newValue) => {
+              onChange={(event, newValue) => { // sets operator value to context
                 setSelectedOperator({label: newValue?.label || ""});
               }}
               sx={{ width: 250 }}

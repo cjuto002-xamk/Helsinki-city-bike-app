@@ -5,7 +5,7 @@ import { JourneyContext } from '../context/JourneysContext';
 import { Journey } from "../context/JourneysContext"
 import FilterBarJourneys from './FilterBarJourneys';
 
-const columns: GridColDef[] = [
+const columns: GridColDef[] = [ // setting columns for data grid
     {
       field: 'Departure station name',
       headerName: 'Departure station name',
@@ -44,18 +44,18 @@ const columns: GridColDef[] = [
     },
   ];
 
-  const secondsToMinutes = (seconds : number) => {
+  const secondsToMinutes = (seconds : number) => { // converts seconds to minutes
     const minutes = Math.floor((seconds % 3600) / 60);
     return minutes;
   }
 
 const JourneyList : React.FC = () : React.ReactElement => {
 
-  const { apiData } = useContext(JourneyContext)
+  const { apiData } = useContext(JourneyContext) //apidata from context
 
-  const [rows, setRows] = useState<GridRowsProp>([]);
+  const [rows, setRows] = useState<GridRowsProp>([]);  // rows for data grid, empty array at first
 
-  useEffect(() => {
+  useEffect(() => { // sets rows for data grid from api data
     if(apiData.journeys){
       setRows(apiData.journeys.map((journey : Journey, idx : number) => {
         const duration = secondsToMinutes(journey.Duration__sec_);
@@ -69,7 +69,6 @@ const JourneyList : React.FC = () : React.ReactElement => {
             "Duration (sec.)": duration,
           }
       }))
-      console.log(apiData.journeys)
     } 
   }, [apiData])
 
@@ -77,7 +76,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
         <>
         <Container>
           <FilterBarJourneys/>
-          {(apiData.haettu)
+          {(apiData.haettu) // if data is fetched, show data grid, else show loading spinner
           ? <><div style={{ width: '100%' }}>
             <DataGrid
                 rows={rows}

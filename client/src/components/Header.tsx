@@ -12,6 +12,7 @@ const Header : React.FC = () : React.ReactElement => {
         <Toolbar>
           <Typography className='header'>Helsinki bike journeys app</Typography>
 
+          {/* Navigation buttons */}
           <ButtonGroup variant="contained" aria-label="outlined primary button group" color='inherit' className='nav'>
 
             <Button className='navButton'>

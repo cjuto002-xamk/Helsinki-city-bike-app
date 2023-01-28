@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
 import { JourneyContext } from '../context/JourneysContext';
 import FilterBar from './FilterBarStations';
 
-const columns: GridColDef[] = [
+const columns: GridColDef[] = [ // setting columns for data grid
     {
       field: 'City',
       headerName: 'City',
@@ -40,13 +40,13 @@ const columns: GridColDef[] = [
 
 const StationList : React.FC = () : React.ReactElement => {
 
-  const { apiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext)
+  const { apiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext) //apidata from context 
 
-  const [ rows, setRows ] = useState<GridRowsProp>([]);
+  const [ rows, setRows ] = useState<GridRowsProp>([]);   // rows for data grid, empty array at first
 
-  const [ filteredData, setFilteredData ] = useState<Station[]>([]);
+  const [ filteredData, setFilteredData ] = useState<Station[]>([]); // filtered data from api data
 
-  useEffect(() => {
+  useEffect(() => { // filters data from api data by selected filters
     if (selectedCity.label|| selectedName.label || selectedAddress.label || selectedOperator.label) {
       setFilteredData(apiStationData.stations.filter((station : Station) => {
         return station.Kaupunki.includes(selectedCity.label) &&
@@ -55,12 +55,12 @@ const StationList : React.FC = () : React.ReactElement => {
         station.Operaattor.includes(selectedOperator.label)
       }))
     }else {
-      setFilteredData(apiStationData.stations)
+      setFilteredData(apiStationData.stations) // if no filters are selected, show all data
     } 
   },[selectedCity, selectedName, selectedAddress, selectedOperator]);
 
   useEffect(() => {
-    if (filteredData.length === 0) {
+    if (filteredData.length === 0) { // if no filtereddata is found, show all data
       setRows(apiStationData.stations.map((station : Station, idx : number) => {
         return  {
             id : idx,
@@ -71,7 +71,7 @@ const StationList : React.FC = () : React.ReactElement => {
             }
       }))
     }else {
-      setRows(filteredData.map((station : Station, idx : number) => {
+      setRows(filteredData.map((station : Station, idx : number) => { // if filtered data is found, show filtered data
         return  {
             id : idx,
             "City": station.Kaupunki,
@@ -87,7 +87,7 @@ const StationList : React.FC = () : React.ReactElement => {
       <>
       <Container>
       <FilterBar/>
-      {(apiStationData.haettu)
+      {(apiStationData.haettu) // if data is fetched from api, show data grid
       ?<>
         <div style={{ width: '100%' }}>
           <DataGrid

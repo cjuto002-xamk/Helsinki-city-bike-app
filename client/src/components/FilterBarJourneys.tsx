@@ -11,17 +11,20 @@ interface Query {
 
 const FilterBarJourneys : React.FC = () : React.ReactElement => {
 
-    const { apiData, setApiData } = useContext(JourneyContext)
+    const { apiData, setApiData } = useContext(JourneyContext) //apidata from context
 
+    // consts for filtering
     const [month, setMonth] = useState<string>('');
     const [selectedMonth, setSelectedMonth] = useState<number>(5);
     const [selectedFromDay, setSelectedFromDay] = useState<number>(1);
     const [selectedToDay, setSelectedToDay] = useState<number>(1);
+    //query that gets sent to server
     const [query, setQuery] = useState<Query>({selectedMonth: 5, fromDay: 1, toDay: 1});
 
     const [days, setDays] = useState<React.ReactElement[]>([]);
 
-    const handleClick = () => {
+
+    const handleClick = () => { //button click handles that sends query to server
         setApiData({
             ...apiData,
             error: "",
@@ -45,7 +48,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
         });
     }
     
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: SelectChangeEvent) => { //handles changes in select fields and sets them to numbers for query
         if(event.target.name === "month"){
             setMonth(event.target.value);
             if(event.target.value === "may")
@@ -61,7 +64,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
             setSelectedToDay(parseInt(event.target.value));
     };
     
-    useEffect(() => {
+    useEffect(() => { //useEffect that changes number of days depending on month
         let newDays = [];
         if (month === "may" || month === "july") {
             for (let i = 1; i <= 31; i++) {
@@ -75,7 +78,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
         setDays(newDays);
     }, [month]);
 
-    useEffect(() => { 
+    useEffect(() => { //sets all query variables to one state
         setQuery({ selectedMonth : selectedMonth, fromDay: selectedFromDay, toDay: selectedToDay });
     }, [selectedMonth, selectedFromDay, selectedToDay]);
 
