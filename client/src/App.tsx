@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css"
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { JourneyProvider } from './context/JourneysContext';
 import Header from './components/Header';
@@ -6,9 +7,11 @@ import JourneyList from './components/JourneyList';
 import StationList from './components/StationList';
 import Home from './components/Home';
 import "@fontsource/roboto";
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const App : React.FC = () : React.ReactElement => {
   return (
+    <StyledEngineProvider injectFirst>
     <Router>
         <JourneyProvider>
           <>
@@ -27,7 +30,8 @@ const App : React.FC = () : React.ReactElement => {
           </>
         </JourneyProvider>
     </Router>
+    </StyledEngineProvider>
   );
-}
+} 
 
 export default App;

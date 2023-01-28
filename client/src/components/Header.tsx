@@ -1,13 +1,12 @@
 import React from 'react'
 import { AppBar, Button, ButtonGroup, Container, Toolbar, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
-import '../styles.css';
 
 const Header : React.FC = () : React.ReactElement => {
 
   return (
     <>
-    <AppBar position='static' className="appBar">
+    <AppBar position='static' className={ 'appBar' }>
       <Container>
         <Toolbar>
           <Typography className='header'>Helsinki bike journeys app</Typography>
