@@ -72,7 +72,7 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
                                             selectedName, setSelectedName,
                                             selectedAddress, setSelectedAddress,
                                             selectedOperator, setSelectedOperator
-                                             }}>
+                                        }}>
             {props.children}
         </JourneyContext.Provider>
     )

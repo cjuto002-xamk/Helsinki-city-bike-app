@@ -12,8 +12,8 @@ import { StyledEngineProvider } from '@mui/material/styles';
 const App : React.FC = () : React.ReactElement => {
   return (
     <StyledEngineProvider injectFirst>
-    <Router>
-        <JourneyProvider>
+      <JourneyProvider>
+        <Router>
           <>
           <Header/>
 
@@ -28,8 +28,8 @@ const App : React.FC = () : React.ReactElement => {
           </Routes>
           
           </>
-        </JourneyProvider>
-    </Router>
+        </Router>
+      </JourneyProvider>
     </StyledEngineProvider>
   );
 } 
