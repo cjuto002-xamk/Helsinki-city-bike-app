@@ -60,6 +60,11 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
         haettu : true
     });
 
+    const [singleStationData, setSingleStationData] = useState({
+        station : [],
+        open : false
+    });
+
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedName, setSelectedName] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -71,7 +76,8 @@ export const JourneyProvider : React.FC<Props> = (props : Props) : React.ReactEl
                                             selectedCity, setSelectedCity,
                                             selectedName, setSelectedName,
                                             selectedAddress, setSelectedAddress,
-                                            selectedOperator, setSelectedOperator
+                                            selectedOperator, setSelectedOperator,
+                                            singleStationData, setSingleStationData
                                         }}>
             {props.children}
         </JourneyContext.Provider>
