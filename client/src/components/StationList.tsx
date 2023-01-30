@@ -105,6 +105,7 @@ const StationList : React.FC = () : React.ReactElement => {
               disableSelectionOnClick={true}
               className="journeyGrid"
               onRowClick={(e) => {handleSingleStation(e.row)}}
+              data-testid="stationGrid"
           />
         </div>
         <SingleStation/>

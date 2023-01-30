@@ -85,6 +85,7 @@ const JourneyList : React.FC = () : React.ReactElement => {
                 autoHeight={true}
                 disableSelectionOnClick={true}
                 className="journeyGrid"
+                data-testid="journeyGrid"
             />
           </div>
           </>
