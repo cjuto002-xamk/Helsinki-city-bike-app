@@ -103,3 +103,14 @@ a:visited {
 .MuiAutocomplete-root:hover{
     background-color: #1565C0;
 }
+/* Single Station styling */
+.SingleDialog{
+    color: #FFF;
+    margin: auto;
+    padding: 10px;
+}
+.DialogText{
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}

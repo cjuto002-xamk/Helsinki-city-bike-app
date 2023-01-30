@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Backdrop, CircularProgress, Container, Typography} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp} from '@mui/x-data-grid';
-import { JourneyContext } from '../context/JourneysContext';
+import { JourneyContext, Station } from '../context/JourneysContext';
 import FilterBar from './FilterBarStations';
+import SingleStation from './SingeStation';
 
 const columns: GridColDef[] = [ // setting columns for data grid
     {
@@ -31,20 +32,24 @@ const columns: GridColDef[] = [ // setting columns for data grid
     },
   ];
 
-  interface Station {
-    Kaupunki: string,
-    Name: string,
-    Osoite: string,
-    Operaattor: string
-}
 
 const StationList : React.FC = () : React.ReactElement => {
 
-  const { apiStationData, selectedCity, selectedName, selectedAddress, selectedOperator } = useContext(JourneyContext) //apidata from context 
+  const { apiStationData, 
+          selectedCity, selectedName, selectedAddress, selectedOperator, 
+          singleStationData, setSingleStationData } = useContext(JourneyContext) //data from context 
 
   const [ rows, setRows ] = useState<GridRowsProp>([]);   // rows for data grid, empty array at first
 
   const [ filteredData, setFilteredData ] = useState<Station[]>([]); // filtered data from api data
+
+  const handleSingleStation = (station : []) => { // opens single station dialog
+    setSingleStationData({
+      ...singleStationData,
+      station: station,
+      open: true
+    });
+  }
 
   useEffect(() => { // filters data from api data by selected filters
     if (selectedCity.label|| selectedName.label || selectedAddress.label || selectedOperator.label) {
@@ -68,6 +73,7 @@ const StationList : React.FC = () : React.ReactElement => {
             "Name": station.Name,
             "Address": station.Osoite,
             "Operator": station.Operaattor,
+            "Kapasiteet": station.Kapasiteet,
             }
       }))
     }else {
@@ -78,6 +84,7 @@ const StationList : React.FC = () : React.ReactElement => {
             "Name": station.Name,
             "Address": station.Osoite,
             "Operator": station.Operaattor,
+            "Kapasiteet": station.Kapasiteet,
             }
       }))
     }
@@ -97,8 +104,10 @@ const StationList : React.FC = () : React.ReactElement => {
               autoHeight={true}
               disableSelectionOnClick={true}
               className="journeyGrid"
+              onRowClick={(e) => {handleSingleStation(e.row)}}
           />
         </div>
+        <SingleStation/>
       </>
       :<Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
