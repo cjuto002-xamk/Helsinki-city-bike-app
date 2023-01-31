@@ -1,0 +1,19 @@
+{
+  "name": "helsinki-city-bike-app",
+  "version": "1.0.0",
+  "description": "Pre-assignment for Solita Dev Academy Finland\r More info can be found here\r  https://github.com/solita/dev-academy-2023-exercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjuto002-xamk/Helsinki-city-bike-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjuto002-xamk/Helsinki-city-bike-app/issues"
+  },
+  "homepage": "https://github.com/cjuto002-xamk/Helsinki-city-bike-app#readme"
+}

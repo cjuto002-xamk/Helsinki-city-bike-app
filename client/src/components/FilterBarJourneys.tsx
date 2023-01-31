@@ -14,7 +14,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
     const { apiData, setApiData } = useContext(JourneyContext) //apidata from context
 
     // consts for filtering
-    const [month, setMonth] = useState<string>('');
+    const [month, setMonth] = useState<string>('may');
     const [selectedMonth, setSelectedMonth] = useState<number>(5);
     const [selectedFromDay, setSelectedFromDay] = useState<number>(1);
     const [selectedToDay, setSelectedToDay] = useState<number>(1);
@@ -97,6 +97,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
                         label="month"
                         name='month'
                         className='journeySelect'
+                        data-testid="month"
                         >
                         <MenuItem value={"may"}>May</MenuItem>
                         <MenuItem value={"june"}>June</MenuItem>
@@ -114,6 +115,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
                         label="Fday"
                         name='Fday'
                         className='journeySelect'
+                        data-testid="fromDay"
                         >  
                         {days}
                     </Select>
@@ -130,6 +132,7 @@ const FilterBarJourneys : React.FC = () : React.ReactElement => {
                         label="Tday"
                         name='Tday'
                         className='journeySelect'
+                        data-testid="toDay"
                         >
                         {days}
                     </Select>
