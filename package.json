@@ -4,7 +4,10 @@
   "description": "Pre-assignment for Solita Dev Academy Finland\r More info can be found here\r  https://github.com/solita/dev-academy-2023-exercise",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "cd client && npm install && cd .. && cd server && npm install && cd ..",
+    "build-client": "cd client && npm run build",
+    "build-server": "cd server && tsc",
+    "start": "cd server && cd dist && node index.js"
   },
   "repository": {
     "type": "git",

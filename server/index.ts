@@ -10,7 +10,11 @@ const port : number = Number(process.env.PORT) || 3100;
 
 app.use(cors({origin : "http://localhost:3000"}));
 
-app.use(express.static(path.resolve(__dirname, "public")));
+app.use(express.static(path.resolve(__dirname, "../../client/build")));
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+  });
 
 app.use("/api/journeys", apiJourneysRouter);
 
